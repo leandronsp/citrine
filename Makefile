@@ -11,5 +11,8 @@ bundle.install: ## Install the Ruby gems
 rubocop: ## Runs Rubocop with auto-correction
 	@docker-compose run ruby rubocop -A
 
+run.tests: ## Runs Unit tests
+	@docker-compose run ruby ruby -Itest test/citrine_test.rb
+
 bash: ## Creates a bash container
 	@docker-compose run ruby bash
