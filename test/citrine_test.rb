@@ -17,4 +17,12 @@ class CitrineTest < Test::Unit::TestCase
       citrine.layers[1].neurons.map(&:weights)
     )
   end
+
+  #def test_predict
+  #  citrine = Citrine.new([[1, 4], [4, 3]])
+  #  result  = citrine.predict([[1, 1, 0]])
+
+  #  require 'byebug'
+  #  byebug
+  #end
 end

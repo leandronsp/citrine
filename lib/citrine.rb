@@ -1,8 +1,14 @@
+require_relative './forward_propagation'
+
 class Citrine
   attr_reader :layers
 
   def initialize(network_data)
     @layers = network_data.map(&method(:build_layer))
+  end
+
+  def predict(inputs)
+    ForwardPropagation.predict(@layers, inputs)
   end
 
   private
