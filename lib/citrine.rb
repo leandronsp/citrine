@@ -1,5 +1,18 @@
 class Citrine
-  def sigmoid(number) = 1 / (1 + Math.exp(-number))
+  attr_reader :layers
 
-  def sigmoid_derivative(number) = number * (1 - number)
+  def initialize(network_data)
+    @layers = network_data.map(&method(:build_layer))
+  end
+
+  private
+
+  def build_layer(layer_data)
+    layer_data => [number_of_neurons, number_of_weights]
+
+    Layer.build(
+      number_of_neurons: number_of_neurons,
+      number_of_weights: number_of_weights
+    )
+  end
 end

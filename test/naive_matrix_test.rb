@@ -1,5 +1,3 @@
-require 'test/unit'
-require './lib/naive_matrix'
 require 'matrix'
 
 class NaiveMatrixTest < Test::Unit::TestCase

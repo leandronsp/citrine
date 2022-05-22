@@ -1,16 +1,20 @@
-require 'test/unit'
-require './lib/citrine'
-
 class CitrineTest < Test::Unit::TestCase
-  def test_sigmoid
-    citrine = Citrine.new
+  def test_setup_layers
+    citrine = Citrine.new([[1, 4], [4, 3]])
 
-    assert_equal 0.6034832498647263, citrine.sigmoid(0.42)
-  end
+    assert_equal 2, citrine.layers.size
 
-  def test_sigmoid_derivative
-    citrine = Citrine.new
+    assert_equal 1, citrine.layers[0].neurons.size
+    assert_equal 4, citrine.layers[1].neurons.size
 
-    assert_equal 0.1275, citrine.sigmoid_derivative(0.85)
+    assert_equal(
+      [1, 1, 1, 1],
+      citrine.layers[0].neurons[0].weights
+    )
+
+    assert_equal(
+      [[1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1]],
+      citrine.layers[1].neurons.map(&:weights)
+    )
   end
 end
