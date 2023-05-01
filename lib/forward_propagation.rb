@@ -3,6 +3,10 @@
 require 'byebug'
 
 class ForwardPropagation
+  def self.predict!(layers, inputs)
+    predict(layers, inputs).last.first
+  end
+
   def self.predict(layers, inputs, acc = [])
     return acc if inputs.empty?
     return forward(layers, inputs, acc) if acc.empty?
