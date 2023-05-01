@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 class LayerTest < Test::Unit::TestCase
-  def test_convert_layer_to_matrix
+  def test_convert_layer_to_matrix_4_3
     layer = Layer.build(
       number_of_neurons: 4,
       number_of_weights: 3
@@ -7,6 +9,18 @@ class LayerTest < Test::Unit::TestCase
 
     assert_equal(
       [[1, 1, 1, 1], [1, 1, 1, 1], [1, 1, 1, 1]],
+      layer.to_matrix
+    )
+  end
+
+  def test_convert_layer_to_matrix_1_4
+    layer = Layer.build(
+      number_of_neurons: 1,
+      number_of_weights: 4
+    )
+
+    assert_equal(
+      [[1], [1], [1], [1]],
       layer.to_matrix
     )
   end

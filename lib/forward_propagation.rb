@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'byebug'
 
 class ForwardPropagation
@@ -11,7 +13,7 @@ class ForwardPropagation
     predict(result, inputs, acc + [result])
   end
 
-  def self.forward(layers, inputs, acc)
+  def self.forward(layers, inputs, _acc)
     return inputs if layers.empty?
 
     next_layer = layers.shift

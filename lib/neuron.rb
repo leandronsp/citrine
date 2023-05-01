@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Neuron
   attr_reader :weights
 

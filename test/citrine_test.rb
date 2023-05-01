@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CitrineTest < Test::Unit::TestCase
   def test_setup_layers
     citrine = Citrine.new([[1, 4], [4, 3]])
@@ -18,11 +20,11 @@ class CitrineTest < Test::Unit::TestCase
     )
   end
 
-  #def test_predict
+  # def test_predict
   #  citrine = Citrine.new([[1, 4], [4, 3]])
   #  result  = citrine.predict([[1, 1, 0]])
 
   #  require 'byebug'
   #  byebug
-  #end
+  # end
 end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CalcTest < Test::Unit::TestCase
   def test_sigmoid
     assert_equal 0.6034832498647263, Calc.sigmoid(0.42)

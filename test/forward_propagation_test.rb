@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ForwardPropagationTest < Test::Unit::TestCase
   def test_predict
     layer_a  = Layer.build(number_of_neurons: 4, number_of_weights: 3)
@@ -6,11 +8,11 @@ class ForwardPropagationTest < Test::Unit::TestCase
     inputs   = [[1, 1, 0]]
 
     result = ForwardPropagation
-      .predict([layer_a, layer_b, layer_c], inputs)
-      .to_a
-      .flatten
-      .last
-      .to_a
+             .predict([layer_a, layer_b, layer_c], inputs)
+             .to_a
+             .flatten
+             .last
+             .to_a
 
     assert_equal(
       [
