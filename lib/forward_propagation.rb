@@ -9,7 +9,7 @@ class ForwardPropagation
 
   def self.predict(layers, inputs, acc = [])
     return acc if inputs.empty?
-    return forward(layers, inputs, acc) if acc.empty?
+    return forward(layers, inputs) if acc.empty?
 
     result = predict_result(layers, inputs.shift)
 
@@ -17,7 +17,7 @@ class ForwardPropagation
     predict(result, inputs, acc + [result])
   end
 
-  def self.forward(layers, inputs, _acc)
+  def self.forward(layers, inputs)
     return inputs if layers.empty?
 
     next_layer = layers.shift

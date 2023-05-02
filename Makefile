@@ -12,7 +12,7 @@ rubocop: ## Runs Rubocop with auto-correction
 	@docker-compose run ruby rubocop -A
 
 run.tests: ## Runs Unit tests
-	@docker-compose run ruby ruby -Itest test/all.rb
+	@docker-compose run ruby ruby -r ./test/test_helper test/all.rb
 
 bash: ## Creates a bash container
 	@docker-compose run ruby bash
