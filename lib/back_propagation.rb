@@ -42,7 +42,7 @@ class BackPropagation
       return acc + [adjusted]
     end
 
-    last_layer, output_last_layer = remaning.last
+    last_layer, output_last_layer = remaining.last
 
     delta_last_layer = delta(target, output_last_layer)
     delta = delta_middle_layer(output, last_layer, delta_last_layer)
