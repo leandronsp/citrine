@@ -1,28 +1,18 @@
 class NaiveMatrix
-  def multiply(matrix_one, matrix_two)
-    case [matrix_one, matrix_two]
-    in [[], []]
-      return []
-    else
-      one_first_row = matrix_one.shift
-      two_first_row = matrix_two.shift
-
-      [do_multiply(one_first_row, two_first_row) +
-        multiply(matrix_one, matrix_two)]
-    end
+  def initialize(matrix_one, matrix_two)
+    @matrix_one = matrix_one
+    @matrix_two = matrix_two
   end
 
-  private
+  def multiply
+    @matrix_one.map.with_index do |array_one, idx|
+      array_two = @matrix_two[idx]
 
-  def do_multiply(array_one, array_two)
-    case [array_one, array_two]
-    in [[], []]
-      return []
-    else
-      one_first = array_one.shift
-      two_first = array_two.shift
+      array_one.map.with_index do |value_one, idx|
+        value_two = array_two[idx]
 
-      [one_first * two_first] + do_multiply(array_one, array_two)
+        value_one * value_two
+      end
     end
   end
 end

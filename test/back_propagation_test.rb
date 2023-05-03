@@ -9,11 +9,11 @@ class BackPropagationTest < Test::Unit::TestCase
     ], delta
   end
 
-  def test_delta_middle_layer
+  def test_delta_output_layer
     matrix = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
     output_layer  = Layer.from_matrix(matrix)
 
-    delta = BackPropagation.delta_middle_layer(
+    delta = BackPropagation.delta_output_layer(
       [[9, 9, 9]],
       output_layer,
       [[4, 3, 8]]
