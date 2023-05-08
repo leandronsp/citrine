@@ -22,15 +22,16 @@ class TrainFruitsTest < Test::Unit::TestCase
 
     # Prepare data model
     fruits_func = -> do
-      [(1..3).to_a.shuffle.take(3), 0]
+      [(1..20).to_a.shuffle.take(3), 0]
     end
 
     vegetables_func = -> do
-      [(7..9).to_a.shuffle.take(3), 1]
+      [(21..40).to_a.shuffle.take(3), 1]
     end
 
     fruits_inputs = 50.times.map { fruits_func.call }
     vegetables_inputs = 50.times.map { vegetables_func.call }
+
     inputs = fruits_inputs.to_h.keys + vegetables_inputs.to_h.keys
     outputs = fruits_inputs.to_h.values + vegetables_inputs.to_h.values
     targets = Matrix[outputs].transpose.to_a
@@ -38,20 +39,23 @@ class TrainFruitsTest < Test::Unit::TestCase
     network = NeuralNetwork.new([layer_a, layer_b, layer_c])
     network.learn(inputs, targets, 2_000)
 
+    is_fruit = -> { fruits_func.call[0] }
+    is_vegetable = -> { vegetables_func.call[0] }
+
     fruits_and_vegetables = [
-      ['Apple', fruits_func.call[0]],
-      ['Banana', fruits_func.call[0]],
-      ['Carrot', vegetables_func.call[0]],
-      ['Orange', fruits_func.call[0]],
-      ['Tomato', vegetables_func.call[0]],
-      ['Pineapple', fruits_func.call[0]],
-      ['Potato', vegetables_func.call[0]],
-      ['Cherry', fruits_func.call[0]],
-      ['Garlic', vegetables_func.call[0]],
-      ['Broccoli', vegetables_func.call[0]],
-      ['Peach', fruits_func.call[0]],
-      ['Pear', fruits_func.call[0]],
-      ['Lettuce', vegetables_func.call[0]]
+      ['Apple', is_fruit.call],
+      ['Banana', is_fruit.call],
+      ['Carrot', is_vegetable.call],
+      ['Orange', is_fruit.call],
+      ['Tomato', is_vegetable.call],
+      ['Pineapple', is_fruit.call],
+      ['Potato', is_vegetable.call],
+      ['Cherry', is_fruit.call],
+      ['Garlic', is_vegetable.call],
+      ['Broccoli', is_vegetable.call],
+      ['Peach', is_fruit.call],
+      ['Pear', is_fruit.call],
+      ['Lettuce', is_vegetable.call]
     ]
 
     fruits = %w[Apple Banana Orange Pineapple Cherry Peach Pear]

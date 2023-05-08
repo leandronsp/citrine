@@ -4,16 +4,13 @@ class NeuralNetwork
   end
 
   def learn(inputs, targets, times)
-    return if times <= 0
-
-    outputs = ForwardPropagation.forward(@layers.dup, inputs)
-    layers_and_outputs = @layers.zip(outputs)
-    @layers = BackPropagation.adjust(inputs, targets, layers_and_outputs)
-
-    learn(inputs, targets, times - 1)
+    times.times do
+      layers_and_outputs = ForwardPropagation::Predict.call(@layers.dup, inputs)
+      @layers = BackPropagation.adjust(inputs, targets, layers_and_outputs)
+    end
   end
 
-  def predict!(inputs)
-    ForwardPropagation.predict!(@layers.dup, inputs)
+  def predict!(value)
+    ForwardPropagation.predict!(@layers.dup, value)
   end
 end
