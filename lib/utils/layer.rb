@@ -21,10 +21,7 @@ module Utils
     end
 
     def self.build_matrix_from_layer(layer)
-      layer
-        .neurons
-        .map(&:weights)
-        .then(&:transpose)
+      layer.neurons.map(&:weights).then(&:transpose)
     end
   end
 end

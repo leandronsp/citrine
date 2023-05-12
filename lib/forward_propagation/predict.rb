@@ -12,7 +12,7 @@ module ForwardPropagation
     end
 
     def call
-      Forward.call(@layers, @inputs).last.last
+      Forward.call(@layers, @inputs).last.output
     end
   end
 end

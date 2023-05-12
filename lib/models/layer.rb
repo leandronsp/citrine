@@ -4,10 +4,12 @@ module Models
   class Layer
     attr_reader :neurons
 
-    attr_accessor :output
-
     def initialize(neurons)
       @neurons = neurons
+    end
+
+    def to_matrix
+      neurons.map(&:weights).then(&:transpose)
     end
   end
 end

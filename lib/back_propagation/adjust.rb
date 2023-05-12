@@ -4,96 +4,55 @@ module BackPropagation
   class Adjust
     def self.call(*args) = new(*args).call
 
-    def initialize(inputs, target, layers_and_outputs)
+    def initialize(inputs, target, propagation_layers)
       @inputs = inputs
       @target = target
-      @layers_and_outputs = layers_and_outputs
+      @propagation_layers = propagation_layers
     end
 
     def call
-      @layers_and_outputs
-        .map_with_index { |(layer, output), idx| adjust(layer, output, idx) }
+      @propagation_layers
+        .map.with_index { |propagation_layer, idx| adjust(propagation_layer, idx) }
     end
 
-    def adjust(layer, output, idx)
-      return adjust_input_layer(layer, output) if idx == 0
-      return adjust_output_layer(layer, output) if idx == @layers_and_outputs.size - 1
+    private
 
-      adjust_hidden_layer(layer, output, idx)
+    def adjust(propagation_layer, idx)
+      return adjust_input_layer(propagation_layer) if idx == 0
+      return adjust_output_layer(propagation_layer) if idx == @propagation_layers.size - 1
+
+      adjust_hidden_layer(propagation_layer, idx)
     end
 
-    def adjust_input_layer(layer, output)
-      adjust_layer(
-        @inputs,
-        delta_using_last_layer(output),
-        layer
+    def adjust_input_layer(propagation_layer)
+      propagation_layer.adjust!(
+        inputs: @inputs,
+        target: @target,
+        output_layer: output_layer
       )
     end
 
-    def adjust_hidden_layer(layer, output, idx)
-      output_of_previous_layer = @layers_and_outputs[idx - 1][1]
-
-      adjust_layer(
-        output_of_previous_layer,
-        delta_using_last_layer(output),
-        layer
+    def adjust_hidden_layer(propagation_layer, idx)
+      propagation_layer.adjust!(
+        inputs: previous_layer(idx).output,
+        target: @target,
+        output_layer: output_layer
       )
     end
 
-    def adjust_output_layer(layer, output)
-      output_of_previous_layer = @layers_and_outputs[-2][1]
-
-      adjust_layer(
-        output_of_previous_layer,
-        delta(@target, output)
-        layer
+    def adjust_output_layer(propagation_layer)
+      propagation_layer.adjust!(
+        inputs: previous_layer(-1).output,
+        target: @target
       )
     end
 
-    def last_layer
-      @last_layer ||= @layers_and_outputs[-1][0]
+    def previous_layer(idx)
+      @propagation_layers[idx - 1]
     end
 
-    def output_of_last_layer
-      @output_of_last_layer ||= @layers_and_outputs[-1[1]
-    end
-
-    def delta_of_last_layer
-      @delta_of_last_layer ||= delta(@target, output_of_last_layer)
-    end
-
-    def adjust_layer(data, delta, layer)
-      adjustment = Matrix[*data].transpose * Matrix[*delta]
-      matrix = Matrix[*layer.to_matrix] + adjustment
-
-      Layer.from_matrix(matrix.to_a)
-    end
-
-    def delta(target, output)
-      error = Matrix[*target] - Matrix[*output]
-
-      NaiveMatrix.new(
-        output_with_activation(output),
-        error.to_a
-      ).multiply
-    end
-
-    def delta_using_last_layer(output)
-      factor = last_layer.to_matrix.transpose
-      error = Matrix[*delta_of_last_layer] * Matrix[*factor]
-
-      NaiveMatrix.new(
-        output_with_activation(output),
-        error.to_a
-      ).multiply
-    end
-
-    def output_with_activation(output)
-      output.to_a.map do |array|
-        array.map do |value|
-          Calc.sigmoid_derivative(value)
-        end
-      end
+    def output_layer
+      @output_layer ||= @propagation_layers[-1]
     end
   end
 end
