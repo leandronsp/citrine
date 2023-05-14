@@ -18,11 +18,13 @@ class BackPropagation
   def previous_layer_of(layer) = @layers[@layers.index(layer) - 1]
 
   def adjust_layer(layer, index)
-    adjusted_layer(
-      layer: layer,
-      result: index.zero? ? @inputs : previous_layer_of(layer).result,
-      delta: delta(layer)
-    )
+    result = index.zero? ? @inputs : previous_layer_of(layer).result
+    delta = delta(layer)
+
+    adjustment = Matrix[*result].transpose * Matrix[*delta]
+    adjusted = Matrix[*layer.to_matrix] + adjustment
+
+    Layer.from_matrix(adjusted.to_a)
   end
 
   def delta(layer)
@@ -48,12 +50,5 @@ class BackPropagation
         Calc.sigmoid_derivative(value)
       end
     end
-  end
-
-  def adjusted_layer(layer:, result:, delta:)
-    adjustment = Matrix[*result].transpose * Matrix[*delta]
-    adjusted = Matrix[*layer.to_matrix] + adjustment
-
-    Layer.from_matrix(adjusted.to_a)
   end
 end
