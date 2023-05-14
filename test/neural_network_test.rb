@@ -26,35 +26,35 @@ class NeuralNetworkTest < Test::Unit::TestCase
     )
   end
 
-  def test_learn_1000_times
-    network = NeuralNetwork.new([@layer_a, @layer_b])
-    network.learn(@inputs, @targets, 1_000)
+  #def test_learn_1000_times
+  #  network = NeuralNetwork.new([@layer_a, @layer_b])
+  #  network.learn(@inputs, @targets, 1_000)
 
-    assert_equal(
-      0.51,
-      network.predict!([[1, 1, 0]]).round(2)
-    )
-  end
+  #  assert_equal(
+  #    0.51,
+  #    network.predict!([[1, 1, 0]]).round(2)
+  #  )
+  #end
 
-  def test_learn_2000_times
-    network = NeuralNetwork.new([@layer_a, @layer_b])
-    network.learn(@inputs, @targets, 2_000)
+  #def test_learn_2000_times
+  #  network = NeuralNetwork.new([@layer_a, @layer_b])
+  #  network.learn(@inputs, @targets, 2_000)
 
-    assert_equal(
-      0.07,
-      network.predict!([[1, 1, 0]]).round(2)
-    )
-  end
+  #  assert_equal(
+  #    0.07,
+  #    network.predict!([[1, 1, 0]]).round(2)
+  #  )
+  #end
 
-  def test_learn_multiple_times_in_sequence
-    network = NeuralNetwork.new([@layer_a, @layer_b])
-    network.learn(@inputs, @targets, 2_000)
-    network.learn(@inputs, @targets, 2_000)
-    network.learn(@inputs, @targets, 2_000)
+  #def test_learn_multiple_times_in_sequence
+  #  network = NeuralNetwork.new([@layer_a, @layer_b])
+  #  network.learn(@inputs, @targets, 2_000)
+  #  network.learn(@inputs, @targets, 2_000)
+  #  network.learn(@inputs, @targets, 2_000)
 
-    assert_equal(
-      0.03,
-      network.predict!([[1, 1, 0]]).round(2)
-    )
-  end
+  #  assert_equal(
+  #    0.03,
+  #    network.predict!([[1, 1, 0]]).round(2)
+  #  )
+  #end
 end

@@ -4,16 +4,20 @@ class NeuralNetwork
   end
 
   def learn(inputs, targets, times)
-    return if times <= 0
-
-    outputs = ForwardPropagation.forward(@layers.dup, inputs)
-    layers_and_outputs = @layers.zip(outputs)
-    @layers = BackPropagation.adjust(inputs, targets, layers_and_outputs)
-
-    learn(inputs, targets, times - 1)
+    times.times do
+      results = ForwardPropagation.forward(@layers.dup, inputs)
+      layers_with_results = @layers.zip(results).map(&method(:enhance_layer))
+      @layers = BackPropagation.adjust(inputs, targets, layers_with_results)
+    end
   end
 
   def predict!(inputs)
     ForwardPropagation.predict!(@layers.dup, inputs)
+  end
+
+  private
+
+  def enhance_layer((layer, result))
+    layer.tap { |layer| layer.result = result }
   end
 end

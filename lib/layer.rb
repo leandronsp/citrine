@@ -2,6 +2,7 @@ require_relative './neuron'
 
 class Layer
   attr_reader :neurons
+  attr_accessor :result
 
   def initialize(neurons)
     @neurons = neurons

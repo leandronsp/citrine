@@ -1,28 +1,23 @@
 # frozen_string_literal: true
 
 class ForwardPropagation
-  def self.predict!(layers, inputs)
-    forward(layers, inputs).last.first
+  def self.forward(*args) = new(*args).forward!
+  def self.predict!(*args) = forward(*args).last.first
+
+  def initialize(layers, inputs)
+    @layers = layers
+    @inputs = inputs
   end
 
-  def self.forward(layers, inputs)
-    return inputs if layers.empty?
+  def forward!(inputs: @inputs, acc: [])
+    return acc if @layers.empty?
 
-    result = predict_result(inputs, layers.shift)
+    layer = @layers.shift
 
-    predict(result, layers, [result])
-  end
-
-  def self.predict(result, inputs, acc = [])
-    return acc if inputs.empty?
-
-    result = predict_result(result, inputs.shift)
-
-    predict(result, inputs, acc + [result])
-  end
-
-  def self.predict_result(inputs, layer)
-    (Matrix[*inputs] * Matrix[*layer.to_matrix])
+    result =
+      (Matrix[*inputs] * Matrix[*layer.to_matrix])
       .map(&Calc.method(:sigmoid))
+
+    forward!(inputs: result, acc: acc + [result])
   end
 end

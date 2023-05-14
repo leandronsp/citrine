@@ -1,4 +1,6 @@
-class NaiveMatrix
+class NaiveMatrixMultiply
+  def self.call(*args) = new(*args).multiply
+
   def initialize(matrix_one, matrix_two)
     @matrix_one = matrix_one
     @matrix_two = matrix_two
