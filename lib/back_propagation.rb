@@ -5,7 +5,7 @@ require_relative 'calc'
 require_relative 'naive_matrix_multiply'
 
 class BackPropagation
-  def self.adjust(*args) = new(*args).adjust
+  def self.call(*args) = new(*args).call
 
   def initialize(inputs, target, layers)
     @inputs = inputs
@@ -13,11 +13,16 @@ class BackPropagation
     @layers = layers
   end
 
-  def adjust = @layers.map.with_index(&method(:adjust_layer))
+  def call
+    @layers.map.with_index(&method(:adjusted_layer))
+  end
+
+  private
+
   def output_layer = @layers.last
   def previous_layer_of(layer) = @layers[@layers.index(layer) - 1]
 
-  def adjust_layer(layer, index)
+  def adjusted_layer(layer, index)
     result = index.zero? ? @inputs : previous_layer_of(layer).result
     delta = delta(layer)
 

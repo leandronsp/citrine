@@ -26,6 +26,6 @@ class TrainXORTest < Test::Unit::TestCase
     network = NeuralNetwork.new([layer_a, layer_b, layer_c])
     network.learn(inputs, targets, 2_000)
 
-    assert_equal 0.05, network.predict!([[1, 1, 0]]).round(2)
+    assert_equal 0.05, network.predict([[1, 1, 0]]).round(2)
   end
 end

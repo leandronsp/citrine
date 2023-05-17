@@ -58,11 +58,11 @@ class TrainFruitsTest < Test::Unit::TestCase
     vegetables = %w[Carrot Tomato Potato Garlic Broccoli Lettuce]
 
     fruits.each do |fruit|
-      assert network.predict!([fruits_and_vegetables.to_h[fruit]]) < 0.5
+      assert network.predict([fruits_and_vegetables.to_h[fruit]]) < 0.5
     end
 
     vegetables.each do |vegetable|
-      assert network.predict!([fruits_and_vegetables.to_h[vegetable]]) > 0.95
+      assert network.predict([fruits_and_vegetables.to_h[vegetable]]) > 0.95
     end
   end
 end

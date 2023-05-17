@@ -22,7 +22,7 @@ class NeuralNetworkTest < Test::Unit::TestCase
 
     assert_equal(
       0.81,
-      network.predict!([[1, 1, 0]]).round(2)
+      network.predict([[1, 1, 0]]).round(2)
     )
   end
 
